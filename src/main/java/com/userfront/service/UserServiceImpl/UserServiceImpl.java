@@ -100,9 +100,9 @@ public class UserServiceImpl implements UserService{
         return userDao.save(user);
     }
 
-//    public List<User> findUserList() {
-//        return userDao.findAll();
-//    }
+    public List<User> findUserList() {
+        return (List<User>) userDao.findAll();
+    }
 
     public void enableUser (String username) {
         User user = findByUsername(username);
