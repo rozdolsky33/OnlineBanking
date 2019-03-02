@@ -19,22 +19,5 @@ public class AppointmentServiceImpl implements AppointmentService {
         return appointmentDao.save(appointment);
     }
 
-    public List<Appointment> findAll() {
-        return appointmentDao.findAll();
-    }
 
-    @Override
-    public Appointment findAppointment(Long id) {
-        return (Appointment) appointmentDao.findAll();
-    }
-
-//    public Appointment findAppointment(Long id) {
-//        return appointmentDao.findOne(id);
-//    }
-
-    public void confirmAppointment(Long id) {
-        Appointment appointment = findAppointment(id);
-        appointment.setConfirmed(true);
-        appointmentDao.save(appointment);
-    }
 }

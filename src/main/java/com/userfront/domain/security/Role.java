@@ -4,10 +4,6 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by z00382545 on 02/27/19.
- */
-
 @Entity
 public class Role {
     @Id
