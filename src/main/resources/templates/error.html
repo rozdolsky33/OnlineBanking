@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/header :: common-header"/>
+<body roleId="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+<head th:replace="common/header :: navbar"/>
+<div class="container main">
+    <h1>Oops... something went wrong.</h1>
+
+    <table>
+
+        <!--<tr>-->
+            <!--<td>Date</td>-->
+            <!--<td th:text="${timestamp}"/>-->
+        <!--</tr>-->
+        <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+            <!--&lt;!&ndash;<td>Path</td>&ndash;&gt;-->
+            <!--&lt;!&ndash;<td th:text="${path}"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+        <!--<tr>-->
+            <!--<td>Error</td>-->
+            <!--<td th:text="${error}"/>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td>Status</td>-->
+            <!--<td th:text="${status}"/>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td>Message</td>-->
+            <!--<td th:text="${message}"/>-->
+        <!--</tr>-->
+
+        <!--<div th:if="${parameters != null}">-->
+
+            <!--<h3>Parameters</h3>-->
+
+            <!--<span th:each="parameters " ${parameters}>-->
+                <!--<div th:text="${parameter.key} + ':'+ ${#strings.arrayJoin(parameter.value, ',')}"></div>-->
+            <!--</span>-->
+
+        <!--</div>-->
+
+
+        <h2>Global Handler</h2>
+        <p th:text="${error}">Exception</p>
+
+
+        <!--<tr>-->
+            <!--<td>Exception</td>-->
+            <!--<td th:text="${exception}"/>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td>Trace</td>-->
+            <!--<td>-->
+                <!--<pre th:text="${trace}"/>-->
+            <!--</td>-->
+        <!--</tr>-->
+    </table>
+    <br/>
+    <button class="btn btn-lg btn-warning" onclick="javascript:window.history.back();">< Go Back</button>
+</div>
+
+<div th:replace="common/header :: body-bottom-scripts"/>
+
+</body>
+</html>

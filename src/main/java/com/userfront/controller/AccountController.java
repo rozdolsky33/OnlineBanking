@@ -4,17 +4,22 @@ import com.userfront.domain.*;
 import com.userfront.service.AccountService;
 import com.userfront.service.TransactionService;
 import com.userfront.service.UserService;
+import com.userfront.service.UserServiceImpl.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.security.Principal;
 import java.util.List;
 
 @Controller
+@Validated
 @RequestMapping("/account")
 public class AccountController {
 
@@ -53,7 +58,8 @@ public class AccountController {
         return "savingsAccount";
     }
 
-    @RequestMapping(value = "/deposit", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/deposit",  method = RequestMethod.GET)
     public String deposit(Model model) {
         model.addAttribute("accountType", "");
         model.addAttribute("amount", "");
@@ -61,15 +67,22 @@ public class AccountController {
         return "deposit";
     }
 
-    @RequestMapping(value = "/deposit", method = RequestMethod.POST)
-    public String depositPOST(@ModelAttribute("amount") String amount, @ModelAttribute("accountType") String accountType, Principal principal) {
-        accountService.deposit(accountType, Double.parseDouble(amount), principal);
+    @RequestMapping(value = "/deposit")
+    public String deposit(@ModelAttribute("amount") Double amount,
+                          @ModelAttribute("accountType") String accountType,
+                         Principal principal) throws Exception {
 
+        if (amount < 0) throw new Exception("Must be a positive number" + amount);
+
+        if (accountType == null || accountType.trim().isEmpty()) {
+            throw new Exception("Please select AccountType for deposit" + accountType);
+        }
+        accountService.deposit(AccountServiceImpl.AccountType.valueOf(accountType), amount, principal);
         return "redirect:/userFront";
     }
 
     @RequestMapping(value = "/withdraw", method = RequestMethod.GET)
-    public String withdraw(Model model){
+    public String withdraw(Model model) {
         model.addAttribute("accountType", "");
         model.addAttribute("amount", "");
 
@@ -77,9 +90,17 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/withdraw", method = RequestMethod.POST)
-    public String withdrawPOST(@ModelAttribute("amount") String amount, @ModelAttribute("accountType") String accountType, Principal principal){
-        accountService.withdraw(accountType, Double.parseDouble(amount), principal);
+    public String withdraw(@ModelAttribute("amount") Double amount,
+                           @ModelAttribute("accountType") String accountType,
+                            Principal principal) throws Exception {
 
+        if (accountType == null || accountType.trim().isEmpty()) {
+            throw new Exception ("Please select AccountType for withdrawal");
+        }
+
+        if (amount < 0) throw new Exception("Must be a positive number" + amount);
+
+        accountService.withdraw(AccountServiceImpl.AccountType.valueOf(accountType), amount, principal);
         return "redirect:/userFront";
     }
 
